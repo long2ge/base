@@ -8,6 +8,19 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
+| 添加config_path, 配置路径读取方法
+|--------------------------------------------------------------------------
+|
+*/
+if (! function_exists('config_path')) {
+    function config_path($path = '')
+    {
+        return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------
 |
@@ -21,9 +34,12 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+ $app->withFacades();
 
-// $app->withEloquent();
+ $app->withEloquent();
+ 
+ 
+ $app->configure('modules');
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +106,15 @@ $app->singleton(
 | can respond to, as well as the controllers that may handle them.
 |
 */
+
+/**
+ * 引入laravel模块化配置
+ */
+$app->bind('path.public', function() {
+    return base_path() . '/public/';
+});
+
+$app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
