@@ -77,9 +77,9 @@ $app->singleton(
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+	$app->routeMiddleware([
+		'auth' => App\Http\Middleware\Authenticate::class,
+	]);
 
 /*
 |--------------------------------------------------------------------------
@@ -116,6 +116,8 @@ $app->bind('path.public', function() {
 
 $app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
