@@ -39,8 +39,8 @@ $app = new Laravel\Lumen\Application(
  $app->withEloquent();
  
  
- $app->configure('modules');
-
+ $app->configure('modules');  // 引入modules配置文件
+ $app->configure('api'); // 引入dingo api配置文件
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -115,6 +115,7 @@ $app->bind('path.public', function() {
 });
 
 $app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
+$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
