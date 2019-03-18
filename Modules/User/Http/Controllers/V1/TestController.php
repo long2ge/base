@@ -10,11 +10,14 @@ namespace Modules\User\Http\Controllers\V1;
 
 
 use Modules\User\Http\Controllers\UserController;
+use Modules\User\Models\User;
 
 class TestController extends UserController
 {
     public function test()
     {
-        echo 'test';
+        $user = app(User::class)->find(1);
+
+        return $user;
     }
 }
