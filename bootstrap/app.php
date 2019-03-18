@@ -6,6 +6,7 @@ require_once __DIR__.'/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
+
 /*
 |--------------------------------------------------------------------------
 | 添加config_path, 配置路径读取方法
@@ -33,6 +34,10 @@ if (! function_exists('config_path')) {
 $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
+
+$app->bind('path.public', function() {
+    return __DIR__ . 'public/';
+});
 
  $app->withFacades();
 
@@ -111,11 +116,6 @@ $app->singleton(
  * 引入laravel模块化配置(注意顺序问题)
  */
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
-
-$app->bind('path.public', function() {
-    return base_path() . '/public/';
-});
-
 $app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
 
 
