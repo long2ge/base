@@ -108,14 +108,17 @@ $app->singleton(
 */
 
 /**
- * 引入laravel模块化配置
+ * 引入laravel模块化配置(注意顺序问题)
  */
+$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+
 $app->bind('path.public', function() {
     return base_path() . '/public/';
 });
 
 $app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
-$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+
+
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
