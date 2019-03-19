@@ -3,9 +3,17 @@
 namespace Modules\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable;
+use Laravel\Lumen\Auth\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Laravel\Passport\HasApiTokens;
 
-class User extends Model
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
+    use Authenticatable, Authorizable;
+    use HasApiTokens;
+
     /**
      * The connection name for the model.
      * 库链接的配置名

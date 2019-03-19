@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'gbcloud_core'),
+    'default' => env('DB_CONNECTION', 'cloud_core'),
 
     /*
     |--------------------------------------------------------------------------
@@ -62,6 +62,20 @@ return [
             'host'      => env('USER_DB_HOST', 'localhost'),
             'port'      => env('USER_DB_PORT', 3306),
             'database'  => env('USER_DB_DATABASE', 'cloud_user'),
+            'username'  => env('USER_DB_USERNAME', 'root'),
+            'password'  => env('USER_DB_PASSWORD', ''),
+            'charset'   => env('USER_DB_CHARSET', 'utf8'),
+            'collation' => env('USER_DB_COLLATION', 'utf8_unicode_ci'),
+            'prefix'    => env('USER_DB_PREFIX', ''),
+            'timezone'  => env('USER_DB_TIMEZONE', '+00:00'),
+            'strict'    => env('USER_DB_STRICT_MODE', false),
+        ],
+
+        'cloud_core' => [
+            'driver'    => 'mysql',
+            'host'      => env('USER_DB_HOST', 'localhost'),
+            'port'      => env('USER_DB_PORT', 3306),
+            'database'  => env('USER_DB_DATABASE', 'cloud_core'),
             'username'  => env('USER_DB_USERNAME', 'root'),
             'password'  => env('USER_DB_PASSWORD', ''),
             'charset'   => env('USER_DB_CHARSET', 'utf8'),

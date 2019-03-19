@@ -42,10 +42,10 @@ $app->bind('path.public', function() {
  $app->withFacades();
 
  $app->withEloquent();
- 
- 
- $app->configure('modules');  // 引入modules配置文件
+
  $app->configure('api'); // 引入dingo api配置文件
+ $app->configure('modules');  // 引入modules配置文件
+    $app->configure('auth');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -96,9 +96,12 @@ $app->singleton(
 | totally optional, so you are not required to uncomment this line.
 |
 */
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
+$app->alias('cache', 'Illuminate\Cache\CacheManager'); //新增，解决Lumen的Cache问题
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*
@@ -118,9 +121,6 @@ $app->singleton(
 $app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 $app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
 
-
-$app->register(Laravel\Passport\PassportServiceProvider::class);
-$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
