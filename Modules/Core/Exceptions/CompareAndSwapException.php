@@ -15,5 +15,8 @@ namespace Modules\Core\Exceptions;
  */
 class CompareAndSwapException extends \Exception
 {
-
+    public static function create()
+    {
+        return new static("");
+    }
 }
