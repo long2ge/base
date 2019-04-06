@@ -2,9 +2,9 @@
 
 namespace Modules\Core\Http\Controllers;
 
-use Nwidart\Modules\Routing\Controller;
+use App\Http\Controllers\BaseController;
 
-class CoreController extends Controller
+class CoreController extends BaseController
 {
     /**
      * @apiDefine RestfulSuccess
