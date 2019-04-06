@@ -36,11 +36,15 @@ class IdentifyingCodeController extends CoreController
         // 获取参数
         $requestArr = $request->only(array_keys($parameters));
 
-        // 校验手机验证码次数
-        $identifyingCodeService->identifyingCodeIsOverLimit($requestArr['phone_number']);
+        try {
 
-        // 保存验证码
-        $identifyingCodeService->saveIdentifyingCode($requestArr);
+            $identifyingCodeService->identifyingCodeIsOverLimit($requestArr['phone_number']); // 校验手机验证码次数
+
+            $identifyingCodeService->saveIdentifyingCode($requestArr); // 保存验证码
+
+        } catch (\Exception $e) {
+            $this->response()->errorBadRequest($e->getMessage());
+        }
 
         // 返回报文
         $this->response()->noContent();
