@@ -32,7 +32,7 @@ class IdentifyingCodeService
     public function identifyingCodeIsOverLimit($phoneNumber)
     {
         $count = app(IdentifyingCodeLog::class)->hasCodeCountByDate($phoneNumber);
-        if ($this->everyDayLimit > $count) {
+        if ($this->everyDayLimit < $count) {
             throw new OverLimitException('over limit ! limit times is : ' . $count);
         }
     }
@@ -65,10 +65,11 @@ class IdentifyingCodeService
      * Date: 2019/4/6 11:01 PM
      * Describe:
      * @param array $requestArr 请求参数
+     * @throws \Exception
      */
     public function saveIdentifyingCode(array $requestArr)
     {
-        $code = 123456;
+        $code = random_int(100000,999999);
 
         $requestArr = array_merge($requestArr, [
             'code' => $code,
