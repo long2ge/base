@@ -60,16 +60,19 @@ class IdentifyingCodeService
     }
 
     /**
-     * 请求参数
+     * 保存手机验证码
      * User: long
-     * Date: 2019/4/6 11:01 PM
+     * Date: 2019/4/7 12:21 AM
      * Describe:
      * @param array $requestArr 请求参数
-     * @throws \Exception
      */
     public function saveIdentifyingCode(array $requestArr)
     {
-        $code = random_int(100000,999999);
+        try {
+            $code = random_int(100000,999999);
+        } catch (\Exception $e) {
+            $code = '888888';
+        }
 
         $requestArr = array_merge($requestArr, [
             'code' => $code,
