@@ -27,11 +27,11 @@ class IdentifyingCodeLog extends BaseModel
     protected $table = 'identifying_code_logs';
 
     /**
-     * The attributes excluded from the model's JSON form.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $hidden = [
+    protected $fillable = [
         'phone_number',
         'code',
         'content',
