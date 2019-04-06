@@ -6,4 +6,4 @@
  * Time: 1:20
  */
 
-$api->get('test', ['uses' => 'TestController@test']);
+$api->get('test', ['uses' => 'IdentifyingCodeController@test']);
