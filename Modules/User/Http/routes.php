@@ -8,4 +8,4 @@
 
 $api = app('Dingo\Api\Routing\Router');
 
-require __DIR__ . './Routes/V1/api_routes.php';
+require __DIR__ . '/Routes/V1/api_routes.php';
