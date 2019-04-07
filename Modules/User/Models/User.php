@@ -69,7 +69,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * 设置用来认证的密码字段
      * @return string
      */
-    public function getAuthPassword() : string
+    public function getAuthPassword()
     {
         return $this->password;
     }
