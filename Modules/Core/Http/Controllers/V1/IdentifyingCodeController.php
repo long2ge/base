@@ -36,6 +36,7 @@ class IdentifyingCodeController extends CoreController
      * Date: 2019/4/6 10:07 PM
      * Describe:
      * @param Request $request
+     * @return \Dingo\Api\Http\Response
      */
     public function store(Request $request)
     {

@@ -8,11 +8,15 @@
 
 namespace Modules\Core\Services;
 
-use Modules\Core\Exceptions\InvalidArgumentException;
 use Modules\Core\Exceptions\OverLimitException;
 use Modules\Core\Models\IdentifyingCodeLog;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * 验证码服务
+ * Class IdentifyingCodeService
+ * @package Modules\Core\Services
+ */
 class IdentifyingCodeService
 {
 
@@ -38,25 +42,21 @@ class IdentifyingCodeService
     }
 
     /**
-     * 获取内容
+     * 获取验证码
      * User: long
-     * Date: 2019/4/6 10:59 PM
+     * Date: 2019/4/7 3:38 PM
      * Describe:
-     * @param string $businessType 业务类型
-     * @param string | int $code 验证码
-     * @return string
+     * @return int|string
      */
-    public function getContent(string $businessType, $code)
+    public function getIdentifyingCode()
     {
-        switch ($businessType) {
-            case 'modify_password' :
-                return "尊敬的用户你现在的验证码是{$code}";
-            case 'register' :
-                return "尊敬的用户你现在的验证码是{$code}";
-            default :
-                throw new InvalidArgumentException('验证码业务类型错误!');
-                break;
+        try {
+            $code = random_int(100000,999999);
+        } catch (\Exception $e) {
+            $code = '888888';
         }
+
+        return $code;
     }
 
     /**
@@ -68,20 +68,21 @@ class IdentifyingCodeService
      */
     public function saveIdentifyingCode(array $requestArr)
     {
-        try {
-            $code = random_int(100000,999999);
-        } catch (\Exception $e) {
-            $code = '888888';
-        }
+        $code = $this->getIdentifyingCode();
+
+        $content = ShortMessageService::getMessageTemplate($requestArr['business_type'], $code);
 
         $requestArr = array_merge($requestArr, [
             'code' => $code,
-            'content' => $this->getContent($requestArr['business_type'], $code),
+            'content' => $content,
         ]);
 
         if ( ! IdentifyingCodeLog::create($requestArr)) {
             throw new BadRequestHttpException('保存手机验证码失败!');
         }
+
+        // 发送短信信息
+        ShortMessageService::sendSMS($requestArr['phone_number'], $content);
     }
 
 }
