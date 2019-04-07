@@ -3,6 +3,7 @@
 namespace Modules\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -11,8 +12,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable;
-    use HasApiTokens;
+    use SoftDeletes, Authenticatable, Authorizable, HasApiTokens;
 
     /**
      * The connection name for the model.
@@ -50,6 +50,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'occupation_id',
         'sex',
         'status',
+    ];
+
+    protected $casts = [
+        'sex' => 'boolean',
+        'status' => 'boolean'
     ];
 
     /**

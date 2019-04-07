@@ -3,9 +3,11 @@
 namespace Modules\User\Models;
 
 use Modules\Core\Models\BaseModel;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Occupation extends BaseModel
 {
+    use softDeletes;
     /**
      * The connection name for the model
      * 库链接的配置名

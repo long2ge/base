@@ -18,7 +18,7 @@ class CreateOccupationsTable extends Migration
         Schema::connection($dbConnection)->create($table, function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->comment('职业名字');
-            $table->integer('creator_id')->comment('创建者id');
+            $table->unsignedInteger('creator_id')->comment('创建者id');
             $table->timestampsTz();
             $table->softDeletes();
         });
