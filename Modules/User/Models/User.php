@@ -30,10 +30,41 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $table = 'users';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'account',
+        'username',
+        'phone_number',
+        'email',
+        'password',
+        'profile',
+        'avatar',
+        'address',
+        'province_id',
+        'city_id',
+        'zone_id',
+        'occupation_id',
+        'sex',
+        'status',
+    ];
+
+    /**
+     * 根据用户名字获取密码
+     * User: long
+     * Date: 2019/4/7 6:22 PM
+     * Describe:
+     * @param $username
+     * @return mixed
+     */
     public function findForPassport($username)
     {
         return (new static())->where('user_name', $username)->first();
     }
+
     /**
      * 设置用来认证的密码字段
      * @return string
