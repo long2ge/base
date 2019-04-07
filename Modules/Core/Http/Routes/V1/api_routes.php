@@ -32,6 +32,9 @@ $api->version('v1', [
 
         require __DIR__ . '/Test/Test.php';
 
+        // 验证码路由
+        require __DIR__ . '/IdentifyingCode/IdentifyingCode.php';
+
         /*
         |--------------------------------------------------------------------------
         | 权限控制的路由

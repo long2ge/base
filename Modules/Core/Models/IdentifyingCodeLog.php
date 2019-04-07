@@ -27,6 +27,11 @@ class IdentifyingCodeLog extends BaseModel
     protected $table = 'identifying_code_logs';
 
     /**
+     * 关闭updated_at字段
+     */
+    const UPDATED_AT = null;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

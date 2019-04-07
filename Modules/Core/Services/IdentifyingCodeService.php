@@ -32,7 +32,7 @@ class IdentifyingCodeService
     public function identifyingCodeIsOverLimit($phoneNumber)
     {
         $count = app(IdentifyingCodeLog::class)->hasCodeCountByDate($phoneNumber);
-        if ($this->everyDayLimit < $count) {
+        if ($this->everyDayLimit <= $count) {
             throw new OverLimitException('over limit ! limit times is : ' . $count);
         }
     }
