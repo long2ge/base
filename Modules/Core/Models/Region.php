@@ -35,9 +35,10 @@ class region extends BaseModel
         'name',
         'pid',
         'capital',
-        'abbr',
+        'pinyin',
         'level',
         'enable',
     ];
 
+    protected $casts = ['enable' => 'boolean'];
 }

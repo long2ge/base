@@ -78,7 +78,7 @@ return [
             'port'      => env('CORE_DB_PORT', 3306),
             'database'  => env('CORE_DB_DATABASE', 'cloud_core'),
             'username'  => env('CORE_DB_USERNAME', 'root'),
-            'password'  => env('CORE_DB_PASSWORD', 'root'),
+            'password'  => env('CORE_DB_PASSWORD', ''),
             'charset'   => env('CORE_DB_CHARSET', 'utf8'),
             'collation' => env('CORE_DB_COLLATION', 'utf8_unicode_ci'),
             'prefix'    => env('CORE_DB_PREFIX', ''),

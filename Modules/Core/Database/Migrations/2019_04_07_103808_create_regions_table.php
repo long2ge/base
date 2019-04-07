@@ -17,13 +17,14 @@ class CreateRegionsTable extends Migration
         $table = 'regions';
         $dbConnection = config('modules.core.config.db-connection');
         Schema::connection($dbConnection)->create($table, function (Blueprint $table) {
-            $table->integer('id')->comment('行政编码');
+            $table->unsignedInteger('id')->comment('行政编码');
+            $table->primary('id');
             $table->string('name')->comment('省市区名');
-            $table->integer('pid')->comment('父级编码');
-            $table->string('capital')->comment('拼音首字母');
-            $table->string('abbr')->comment('拼音全拼');
-            $table->smallInteger('level')->comment('等级');
-            $table->tinyInteger('enable')->comment('是否启用 1启用， 0不启用');
+            $table->unsignedInteger('pid')->default(0)->comment('父级编码');
+            $table->char('capital', 1)->comment('拼音首字母');
+            $table->string('pinyin')->comment('拼音全拼');
+            $table->unsignedTinyInteger('level')->default(1)->comment('等级');
+            $table->boolean('enable')->default(1)->comment('是否启用 1启用， 0不启用');
         });
 
         DB::connection($dbConnection)->statement("ALTER TABLE `$table` comment '地区表'");

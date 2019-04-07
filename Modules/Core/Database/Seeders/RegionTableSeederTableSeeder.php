@@ -24,7 +24,7 @@ class RegionTableSeederTableSeeder extends Seeder
                 'name' => $region[1],
                 'pid' => $region[2],
                 'capital' => $region[3],
-                'abbr' => $region[4],
+                'pinyin' => $region[4],
                 'level' => $region[5],
                 'enable' => $region[6],
             ];
