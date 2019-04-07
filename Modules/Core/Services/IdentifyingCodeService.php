@@ -53,7 +53,7 @@ class IdentifyingCodeService
         try {
             $code = random_int(100000,999999);
         } catch (\Exception $e) {
-            $code = '888888';
+            $code = 888888;
         }
 
         return $code;
