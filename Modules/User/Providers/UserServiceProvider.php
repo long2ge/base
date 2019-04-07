@@ -2,11 +2,14 @@
 
 namespace Modules\User\Providers;
 
+use App\Traits\EnablePublishConfiguration;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
 class UserServiceProvider extends ServiceProvider
 {
+    use EnablePublishConfiguration;
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -21,8 +24,8 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
+        // $this->registerConfig();
+        $this->publishConfig('user', 'config');
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
@@ -49,22 +52,6 @@ class UserServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../Config/config.php', 'user'
         );
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/user');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'user');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'user');
-        }
     }
 
     /**
