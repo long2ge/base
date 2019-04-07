@@ -8,6 +8,7 @@
 
 namespace Modules\Core\Exceptions;
 
+use Modules\Core\Exceptions\Traits\HttpExceptionConstruct;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
@@ -17,16 +18,5 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class InvalidArgumentException extends HttpException
 {
-    /**
-     * 无效参数异常
-     * OverLimitException constructor.
-     * @param string|null $message
-     * @param \Exception|null $previous
-     * @param int $code
-     * @param array $headers
-     */
-    public function __construct(string $message = null, \Exception $previous = null, int $code = 0, array $headers = [])
-    {
-        parent::__construct(400, $message, $previous, $headers, $code);
-    }
+    use HttpExceptionConstruct;
 }

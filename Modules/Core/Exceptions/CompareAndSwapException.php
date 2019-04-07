@@ -7,16 +7,15 @@
  */
 
 namespace Modules\Core\Exceptions;
+use Modules\Core\Exceptions\Traits\HttpExceptionConstruct;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * CAS异常类
  * Class CompareAndSwapException
  * @package Modules\Core\Exceptions
  */
-class CompareAndSwapException extends \Exception
+class CompareAndSwapException extends HttpException
 {
-    public static function create()
-    {
-        return new static("");
-    }
+    use HttpExceptionConstruct;
 }
