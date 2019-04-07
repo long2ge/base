@@ -36,6 +36,8 @@ class CreateIdentifyingCodeLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('identifying_code_logs');
+        $table = 'identifying_code_logs';
+        $dbConnection = config('modules.core.config.db-connection');
+        Schema::connection($dbConnection)->dropIfExists($table);
     }
 }
