@@ -30,9 +30,9 @@ class ShortMessageService
     {
         switch ($businessType) {
             case 'modify_password' :
-                return "尊敬的用户你现在的验证码是{$code}";
+                return "尊敬的修改密码用户你现在的验证码是{$code}";
             case 'register' :
-                return "尊敬的用户你现在的验证码是{$code}";
+                return "尊敬的注册用户你现在的验证码是{$code}";
             default :
                 throw new InvalidArgumentException('验证码业务类型错误!');
         }
