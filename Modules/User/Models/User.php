@@ -78,4 +78,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->password;
     }
+
+    /**
+     * 用户关联粉丝关联关系
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userFans()
+    {
+        return $this->hasMany(UserFans::class);
+    }
+
+    /**
+     * 用户关联偶像关联关系
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userConcerns()
+    {
+        return $this->hasMany(UserFans::class, 'fan_id');
+    }
+
 }
