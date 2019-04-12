@@ -53,5 +53,5 @@ class RegionController extends BaseCoreController
             ->collection($region, new RegionTransformer())
             ->setStatusCode(200);
     }
-    
+
 }

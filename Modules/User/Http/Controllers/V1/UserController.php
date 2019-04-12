@@ -9,6 +9,7 @@
 namespace Modules\User\Http\Controllers\V1;
 
 use App\Http\Controllers\BaseController;
+use Modules\Core\Services\regionService;
 use Modules\User\Models\User;
 use Modules\User\Models\UserFans;
 use Modules\User\Services\UserService;
@@ -58,6 +59,8 @@ class UserController extends BaseController
             ->first();
 
         if ( ! $user) return $this->response()->noContent();
+
+        app(regionService::class)->getRegionByUser($user); // 把地区ID转化为地区名。
 
         return $this->response
             ->item($user, new UserTransformer())
