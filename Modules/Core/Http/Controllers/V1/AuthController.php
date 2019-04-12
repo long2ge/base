@@ -9,10 +9,10 @@
 namespace Modules\Core\Http\Controllers\V1;
 
 
-use Modules\Core\Http\Controllers\CoreController;
+use Modules\Core\Http\Controllers\BaseCoreController;
 use Modules\Core\Services\AuthService;
 
-class AuthController extends CoreController
+class AuthController extends BaseCoreController
 {
     /**
      * @var AuthService 认证服务
