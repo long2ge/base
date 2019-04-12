@@ -4,7 +4,7 @@ namespace Modules\Core\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
 
-class CoreController extends BaseController
+class BaseCoreController extends BaseController
 {
     /**
      * @apiDefine RestfulSuccess

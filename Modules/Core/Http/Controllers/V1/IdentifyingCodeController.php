@@ -9,10 +9,10 @@
 namespace Modules\Core\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
-use Modules\Core\Http\Controllers\CoreController;
+use Modules\Core\Http\Controllers\BaseCoreController;
 use Modules\Core\Services\IdentifyingCodeService;
 
-class IdentifyingCodeController extends CoreController
+class IdentifyingCodeController extends BaseCoreController
 {
 
     /**
