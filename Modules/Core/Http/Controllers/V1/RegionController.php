@@ -12,6 +12,7 @@ namespace Modules\Core\Http\Controllers\V1;
 use Modules\Core\Http\Controllers\BaseCoreController;
 use Modules\Core\Models\region;
 use Modules\Core\Services\regionService;
+use Modules\Core\Transformers\RegionTransformer;
 
 class RegionController extends BaseCoreController
 {
@@ -30,8 +31,27 @@ class RegionController extends BaseCoreController
         $this->regionService = $regionService;
     }
 
+    /**
+     * 地区列表
+     * @param int $provinceId 省份id
+     * @param int $cityId   城市id
+     * @return \Dingo\Api\Http\Response
+     */
     public function index(int $provinceId, int $cityId)
     {
+        if ( 0 == $provinceId) {
+            $pid = 0;
+        } else if ( 0 == $cityId) {
+            $pid = $provinceId;
+        } else {
+            $pid = $cityId;
+        }
 
+        $region = Region::where('enable', 1)->where('pid', $pid)->get();
+
+        return $this->response
+            ->collection($region, new RegionTransformer())
+            ->setStatusCode(200);
     }
+    
 }
