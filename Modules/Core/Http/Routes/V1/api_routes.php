@@ -33,6 +33,10 @@ $api->version('v1', [
         // 验证码路由
         require __DIR__ . '/IdentifyingCode/IdentifyingCode.php';
 
+
+        // 地区路由
+        require __DIR__ . '/Region/Region.php';
+
         /*
         |--------------------------------------------------------------------------
         | 权限控制的路由
