@@ -8,11 +8,10 @@
 
 namespace Modules\User\Http\Controllers\V1;
 
-
-use Modules\User\Http\Controllers\UserController;
+use Modules\User\Http\Controllers\BaseUserController;
 use Modules\User\Models\User;
 
-class TestController extends UserController
+class TestController extends BaseUserController
 {
     public function test()
     {

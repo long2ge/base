@@ -8,14 +8,14 @@
 
 namespace Modules\User\Http\Controllers\V1;
 
-use App\Http\Controllers\BaseController;
 use Modules\Core\Services\regionService;
+use Modules\User\Http\Controllers\BaseUserController;
 use Modules\User\Models\User;
 use Modules\User\Models\UserFans;
 use Modules\User\Services\UserService;
 use Modules\User\Transformers\UserTransformer;
 
-class UserController extends BaseController
+class UserController extends BaseUserController
 {
 
     /**
