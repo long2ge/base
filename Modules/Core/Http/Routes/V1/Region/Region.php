@@ -6,4 +6,4 @@
  * Time: 10:18 PM
  */
 
-$api->post('region/{provinceId}/{cityId}', ['uses' => 'RegionController@index']);
+$api->get('/region/{provinceId}/{cityId}', ['uses' => 'RegionController@index']);
