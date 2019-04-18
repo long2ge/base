@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Core\Models\BaseModel;
 use Modules\User\Models\User;
 
-class Comment extends BaseModel
+class Response extends BaseModel
 {
     use SoftDeletes;
     /**
@@ -23,7 +23,7 @@ class Comment extends BaseModel
      *
      * @var string
      */
-    protected $table = 'comments';
+    protected $table = 'responses';
 
     /**
      * The attributes that are mass assignable.
@@ -33,9 +33,10 @@ class Comment extends BaseModel
     protected $fillable = [
         'id',
         'user_id',
+        'comment_id',
         'post_id',
+        'respondent_id',
         'content',
-        'response_ids_cache',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -46,18 +47,8 @@ class Comment extends BaseModel
         return $this->belongsTo(User::class);
     }
 
-    public function response()
+    public function responseFavor()
     {
-        return $this->hasMany(Response::class);
-    }
-
-    public function commentFavor()
-    {
-        return $this->hasMany(CommentFavor::class);
-    }
-
-    public function speechRecord()
-    {
-        return $this->hasMany(SpeechRecord::class);
+        return $this->hasMany(ResponseFavor::class);
     }
 }

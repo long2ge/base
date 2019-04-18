@@ -7,3 +7,6 @@
  */
 
 $api->get('test', ['uses' => 'TestController@test']);
+$api->get('fans', ['uses' => 'TestController@fans']);
+$api->get('concerns', ['uses' => 'TestController@concerns']);
+$api->get('info', ['uses' => 'TestController@info']);

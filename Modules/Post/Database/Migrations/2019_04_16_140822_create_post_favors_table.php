@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration
+class CreatePostFavorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,17 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        $table = 'posts';
+        $table = 'post_favors';
         $dbConnection = config('modules.post.config.db-connection');
 
         Schema::connection($dbConnection)->create($table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('id');
+            $table->unsignedInteger('post_id');
             $table->unsignedInteger('user_id');
-            $table->string('title');
-            $table->text('content');
-            $table->unsignedInteger('view')->default(0);
-            $table->boolean('stick')->default(0);
-            $table->string('source')->default('web');
-            $table->dateTime('last_updated_at')->default(date('Y-m-d H:i:s'));
-            $table->timestamps();
-            $table->softDeletes();
+            $table->primary(['post_id', 'user_id']);
         });
 
-        DB::connection($dbConnection)->statement("ALTER TABLE `$table` comment '帖子表'");
+        DB::connection($dbConnection)->statement("ALTER TABLE `$table` comment '帖子点赞表'");
     }
     /**
      * Reverse the migrations.
@@ -39,7 +32,7 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        $table = 'posts';
+        $table = 'post_favors';
         $dbConnection = config('modules.post.config.db-connection');
         Schema::connection($dbConnection)->dropIfExists($table);
     }

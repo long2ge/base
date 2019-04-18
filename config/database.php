@@ -67,7 +67,7 @@ return [
             'charset'   => env('USER_DB_CHARSET', 'utf8'),
             'collation' => env('USER_DB_COLLATION', 'utf8_unicode_ci'),
             'prefix'    => env('USER_DB_PREFIX', ''),
-            'timezone'  => env('USER_DB_TIMEZONE', '+00:00'),
+            'timezone'  => env('USER_DB_TIMEZONE', '+08:00'),
             'strict'    => env('USER_DB_STRICT_MODE', false),
             'unix_socket' => env('DB_SOCKET', ''),
         ],
@@ -82,10 +82,28 @@ return [
             'charset'   => env('CORE_DB_CHARSET', 'utf8'),
             'collation' => env('CORE_DB_COLLATION', 'utf8_unicode_ci'),
             'prefix'    => env('CORE_DB_PREFIX', ''),
-            'timezone'  => env('CORE_DB_TIMEZONE', '+00:00'),
+            'timezone'  => env('CORE_DB_TIMEZONE', '+08:00'),
             'strict'    => env('CORE_DB_STRICT_MODE', false),
             'unix_socket' => env('DB_SOCKET', ''),
         ],
+
+        'cloud_post' => [
+            'driver'    => 'mysql',
+            'host'      => env('POST_DB_HOST', 'localhost'),
+            'port'      => env('POST_DB_PORT', 3306),
+            'database'  => env('POST_DB_DATABASE', 'cloud_post'),
+            'username'  => env('POST_DB_USERNAME', 'root'),
+            'password'  => env('POST_DB_PASSWORD', ''),
+            'charset'   => env('POST_DB_CHARSET', 'utf8'),
+            'collation' => env('POST_DB_COLLATION', 'utf8_unicode_ci'),
+            'prefix'    => env('POST_DB_PREFIX', ''),
+            'timezone'  => env('POST_DB_TIMEZONE', '+08:00'),
+            'strict'    => env('POST_DB_STRICT_MODE', false),
+            'unix_socket' => env('DB_SOCKET', ''),
+        ],
+
+
+
 
     ],
 

@@ -13,13 +13,22 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        $table = 'comments';
+        $dbConnection = config('modules.post.config.db-connection');
+
+        Schema::connection($dbConnection)->create($table, function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
-
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('post_id');
+            $table->text('content');
+            $table->json('response_ids_cache')->default(null);
             $table->timestamps();
+            $table->softDeletes();
         });
-    }
 
+        DB::connection($dbConnection)->statement("ALTER TABLE `$table` comment '评论表'");
+    }
     /**
      * Reverse the migrations.
      *
@@ -27,6 +36,8 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        $table = 'comments';
+        $dbConnection = config('modules.post.config.db-connection');
+        Schema::connection($dbConnection)->dropIfExists($table);
     }
 }
