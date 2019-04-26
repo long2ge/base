@@ -38,6 +38,12 @@ class PostTransformer extends BaseTransformer
     public function transform(Post $post)
     {
         $this->transformData($post);
+
+        if ($this->params['type'] == 'index') {
+            $this->data['abstract'] = mb_substr($this->data['content'], 0, 50);
+            unset($this->data['content']);
+        }
+
         return $this->data;
     }
 }

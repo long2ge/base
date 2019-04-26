@@ -25,21 +25,58 @@ class PostController extends BasePostController
         $this->postService = $postService;
     }
 
-    public function store()
+    /**
+     * 发表帖子
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function store(Request $request)
     {
+        $this->requestValidator($request, [
+            'title' => 'required|string',
+            'content' => 'required|string',
+        ]);
 
+        $userId = $request->user()->id;
+        $title = $request->input('title');
+        $content = $request->input('content');
+
+        $this->postService->postIssue($userId, $title, $content);
+
+        return $this->response()->created();
     }
 
-    public function destroy()
+    /**
+     * 删除帖子
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function destroy(Request $request)
     {
-
+        $this->requestValidator($request, ['post_id' => 'required|int']);
+        $postId = $request->input('post_id');
+        $this->postService->postDelete($postId);
+        return $this->response()->noContent();
     }
 
-    public function restore()
+    /**
+     * 恢复帖子
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function restore(Request $request)
     {
-
+        $this->requestValidator($request, ['post_id' => 'required|int']);
+        $postId = $request->input('post_id');
+        $this->postService->postRecover($postId);
+        return $this->response()->created();
     }
 
+    /**
+     * 帖子点赞/取消点赞
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
     public function favor(Request $request)
     {
         // 校验参数
@@ -57,6 +94,11 @@ class PostController extends BasePostController
         return $this->response()->noContent();
     }
 
+    /**
+     * 帖子置顶/取消置顶
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
     public function stick(Request $request)
     {
         // 校验参数
@@ -74,6 +116,11 @@ class PostController extends BasePostController
         return $this->response()->noContent();
     }
 
+    /**
+     * 显示单条帖子
+     * @param int | string $postId 帖子id
+     * @return \Dingo\Api\Http\Response
+     */
     public function show($postId)
     {
         $post = $this->postService->postShow($postId);
@@ -87,12 +134,21 @@ class PostController extends BasePostController
             ->setStatusCode(200);
     }
 
-    public function index()
+    /**
+     * 显示帖子列表
+     * @param int | string $userId 用户id
+     * @return \Dingo\Api\Http\Response
+     */
+    public function index($userId)
     {
-        $posts = $this->postService->postIndex();
+        $paginator = app(Post::class)
+            ->where('user_id', $userId)
+            ->sortByDesc('stick')
+            ->latest()
+            ->paginate(20);
 
         return $this->response
-            ->collection($posts, new PostTransformer())
+            ->paginator($paginator, new PostTransformer(['type' => 'index']))
             ->setStatusCode(200);
     }
 }

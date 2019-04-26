@@ -5,6 +5,7 @@ namespace Modules\Post\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use Modules\Post\Http\Controllers\BasePostController;
 use Modules\Post\Models\Comment;
+use Modules\Post\Models\Post;
 use Modules\Post\Services\CommentService;
 use Modules\Post\Transformers\CommentTransformer;
 
@@ -24,61 +25,119 @@ class CommentController extends BasePostController
     {
         $this->commentService = $commentService;
     }
-    
-    public function store()
-    {
 
+    /**
+     * 发表评论
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->requestValidator($request, [
+            'post_id' => 'required|int',
+            'content' => 'required|string',
+        ]);
+
+        $userId = $request->user()->id;
+        $postId = $request->input('post_id');
+        $content = $request->input('content');
+
+        $this->commentService->commentIssue($userId, $postId, $content);
+
+        return $this->response()->created();
     }
 
-    public function destroy()
+    /**
+     * 删除评论
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function destroy(Request $request)
     {
+        $this->requestValidator($request, [
+            'post_id' => 'required|int',
+            'comment_id' => 'required|int'
+            ]);
 
+        $postId = $request->input('post_id');
+        $commentId = $request->input('comment_id');
+        $this->commentService->commentDelete($postId, $commentId);
+        return $this->response()->noContent();
     }
 
-    public function restore()
+    /**
+     * 恢复评论
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
+    public function restore(Request $request)
     {
+        $this->requestValidator($request, [
+            'post_id' => 'required|int',
+            'comment_id' => 'required|int'
+        ]);
 
+        $postId = $request->input('post_id');
+        $commentId = $request->input('comment_id');
+        $this->commentService->commentRecover($postId, $commentId);
+        return $this->response()->created();
     }
 
+    /**
+     * 评论点赞/取消点赞
+     * @param Request $request
+     * @return \Dingo\Api\Http\Response
+     */
     public function favor(Request $request)
     {
         // 校验参数
         $this->requestValidator($request, [
+            'post_id' => 'required|int', //帖子id
             'comment_id' => 'required|int', // 评论id
             'is_favor' => 'required|boolean', // 是否点赞
         ]);
 
         $userId = $request->user()->id;
+        $postId = $request->input('post_id');
         $commentId = $request->input('comment_id');
         $isFavor = $request->input('is_favor');
 
-        $this->commentService->switchFavor($commentId, $userId, $isFavor);
+        $this->commentService->switchFavor($postId, $commentId, $userId, $isFavor);
 
         return $this->response()->noContent();
     }
 
-    public function show($commentId)
+    /**
+     * 显示单条评论
+     * @param int | string $postId 帖子id
+     * @param int | string $commentId 评论id
+     * @return \Dingo\Api\Http\Response
+     */
+    public function show($postId, $commentId)
     {
-        $comment = $this->commentService->commentShow($commentId);
+        $comment = $this->commentService->commentShow($postId, $commentId);
 
         return $this->response
             ->item($comment, new CommentTransformer())
             ->setStatusCode(200);
     }
 
-    public function index()
+    /**
+     * 显示评论列表
+     * @param int | string $postId 帖子id
+     * @return \Dingo\Api\Http\Response
+     */
+    public function index($postId)
     {
-        $comments = Comment::where('post_id', 1)
-            ->select([
-                'user_id',
-                'content',
-                'responses_ids_cache',
-                'created_at'
-            ])
-            ->get();
+        $title = Post::findOrFail($postId)->title;
+
+        $paginator = app(Comment::class)
+            ->where('post_id', $postId)
+            ->paginate(20);
 
         return $this->response
-            ->collection($comments, new CommentTransformer())
+            ->paginator($paginator, new CommentTransformer())
+            ->setMeta(['title' => $title])
             ->setStatusCode(200);
     }
 }

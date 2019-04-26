@@ -15,7 +15,7 @@ class Post extends BaseModel
      *
      * @var string
      */
-    protected $connection = 'cloud_user';
+    protected $connection = 'cloud_post';
 
     /**
      * Table Name
@@ -51,17 +51,17 @@ class Post extends BaseModel
         return $this->belongsTo(User::class);
     }
 
-    public function comment()
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function postFavor()
+    public function postFavors()
     {
         return $this->hasMany(PostFavor::class);
     }
 
-    public function speechRecord()
+    public function speechRecords()
     {
         return $this->hasMany(SpeechRecord::class);
     }

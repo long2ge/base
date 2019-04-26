@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -20,7 +21,8 @@ class CreateSpeechRecordsTable extends Migration
             $table->engine = 'InnoDB';
             $table->unsignedInteger('post_id');
             $table->unsignedInteger('comment_id');
-            $table->unsignedInteger('response_id');
+            $table->unsignedInteger('response_id')->default(0);
+            $table->primary(['post_id', 'comment_id', 'response_id']);
         });
 
         DB::connection($dbConnection)->statement("ALTER TABLE `$table` comment '发言记录表'");

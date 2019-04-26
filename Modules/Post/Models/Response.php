@@ -15,7 +15,7 @@ class Response extends BaseModel
      *
      * @var string
      */
-    protected $connection = 'cloud_user';
+    protected $connection = 'cloud_post';
 
     /**
      * Table Name
@@ -47,7 +47,12 @@ class Response extends BaseModel
         return $this->belongsTo(User::class);
     }
 
-    public function responseFavor()
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
+
+    public function responseFavors()
     {
         return $this->hasMany(ResponseFavor::class);
     }

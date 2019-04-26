@@ -10,47 +10,77 @@ namespace Modules\Post\Services;
 
 use Modules\Post\Models\Post;
 use Modules\Post\Models\PostFavor;
-// use Modules\User\Services\UserService; // method 3
+/* method 3
+use Modules\User\Services\UserService;
+use Modules\Post\Models\SpeechRecord; */
 
 class PostService
 {
     /**
-     * @param string | int $postId 帖子id
+     * 发表帖子
+     * @param int | string $userId 帖子id
+     * @param string $title 标题
+     * @param string $content 内容
+     */
+    public function postIssue($userId, $title, $content)
+    {
+        Post::create([
+            'user_id' => $userId,
+            'title' => $title,
+            'content' => $content,
+        ]);
+    }
+
+    /**
+     * 删除帖子
+     * @param int | string $postId 帖子id
+     */
+    public function postDelete($postId)
+    {
+        Post::findOrFail($postId)->delete();
+    }
+
+    /**
+     * 恢复帖子
+     * @param int | string $postId 帖子id
+     */
+    public function postRecover($postId)
+    {
+        Post::onlyTrashed()->where('id', $postId)->restore();
+    }
+
+    /**
+     * 显示单条帖子
+     * @param int | string $postId 帖子id
      * @return null
      */
     public function postShow($postId)
     {
+        /* method 1 */
         $post = Post::where('id', $postId)->with([
-            'user' => function ($query) {
-                $query->select(['user_name']);
-            }
-        ])->first();
+            'user' => function ($queryUserName) {
+            $queryUserName->select(['user_name']);
+        }])->firstOrFail();
 
-        if ( ! $post) return null;
+        $post->user_name = $post->user->user_name;
+        $post->speechCount = $post->speechRecord ? $post->speechRecord->count() : 0;
 
-        $post->user_name = $post->user->user_name; // method 1
+        /* method 2
+        $post = Post::findOrFail($postId);
+        $post->user_name = $post->user()->select(['user_name'])->first()->user_name;
+        $post->speechCount = $post->speechRecord()->count(); */
 
-        // $post = Post::find($postId);
-        // $post->user_name = $post->user()->select(['user_name'])->first()->user_name; // method 2
-
-        // $post->user_name = app(UserService::class)->getUserNameById($post->user_id); // method 3
+        /* method 3
+        $post = Post::findOrFail($postId);
+        $post->speechCount = $post->speechRecord()->count(); */
 
         return $post;
     }
 
-    public function postIndex()
-    {
-        $posts = Post::where('user_id', 10000001)
-            ->sortByDesc('stick')
-            ->get();
-
-        return $posts;
-    }
-
     /**
      * 帖子置顶
-     * @param string | int $postId 帖子id
-     * @param string | int $userId 用户id
+     * @param int | string $postId 帖子id
+     * @param int | string $userId 用户id
      * @param bool $isStick 是否置顶
      */
     public function switchStick($postId, $userId, $isStick)
@@ -74,9 +104,9 @@ class PostService
 
     /**
      * 帖子点赞
-     * @param $postId
-     * @param $userId
-     * @param $isFavor
+     * @param int | string $postId 帖子id
+     * @param int | string $userId 帖子id
+     * @param bool $isFavor 是否点赞
      */
     public function switchFavor($postId, $userId, $isFavor)
     {
@@ -87,5 +117,27 @@ class PostService
                  : PostFavor::where('post_id', $postId)
                      ->where('user_id', $userId)
                      ->delete();
+    }
+
+    /**
+     * 显示帖子标题
+     * @param int | string $postId 帖子id
+     * @return mixed
+     */
+    public function showPostTitle($postId)
+    {
+        $title = Post::findOrFail($postId)->title;
+        return $title;
+    }
+
+    /**
+     * 显示帖子回复数
+     * @param int | string $postId 帖子id
+     * @return mixed
+     */
+    public function speechCount($postId)
+    {
+        $post = $this->postShow($postId);
+        return $post->speechCount;
     }
 }

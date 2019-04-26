@@ -12,7 +12,7 @@ class SpeechRecord extends BaseModel
      *
      * @var string
      */
-    protected $connection = 'cloud_user';
+    protected $connection = 'cloud_post';
 
     /**
      * Table Name
