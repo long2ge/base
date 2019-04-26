@@ -1,0 +1,48 @@
+{
+    "name": "skynetapi/statistics-module",
+    "description": "statistics Module of skynetapi",
+    "type": "laravel-module",
+    "authors": [
+        {
+            "name": "TW Dev Team",
+            "email": "517946752@qq.com"
+        }
+    ],
+    "repositories": [{
+        "type": "composer",
+        "url": "http://tw.packages.develop.com:8888"
+    }],
+    "require": {
+        "php": ">=7.0.0",
+        "composer/installers": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "orchestra/testbench": "~3.1",
+        "fzaninotto/faker": "1.4.0",
+        "doctrine/dbal": "~2.5"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Statistics\\Providers\\StatisticsServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        },
+        "branch-alias": {
+            "dev-develop": "1.0.x-dev",
+            "dev-qa/qa1": "1.0.x-dev",
+            "dev-qa/qa2": "1.0.x-dev",
+            "dev-qa/qa3": "1.0.x-dev",
+            "dev-master": "1.0.x-dev",
+            "dev-release": "1.0.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Statistics\\": ""
+        }
+    }
+}
