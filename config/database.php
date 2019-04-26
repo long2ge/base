@@ -114,6 +114,20 @@ return [
             'strict'    => env('POST_DB_STRICT_MODE', false),
             'unix_socket' => env('DB_SOCKET', ''),
         ],
+        'cloud_statistics' => [
+            'driver'    => 'mysql',
+            'host'      => env('POST_DB_HOST', 'localhost'),
+            'port'      => env('POST_DB_PORT', 3306),
+            'database'  => env('POST_DB_DATABASE', 'cloud_statistics'),
+            'username'  => env('POST_DB_USERNAME', 'root'),
+            'password'  => env('POST_DB_PASSWORD', ''),
+            'charset'   => env('POST_DB_CHARSET', 'utf8'),
+            'collation' => env('POST_DB_COLLATION', 'utf8_unicode_ci'),
+            'prefix'    => env('POST_DB_PREFIX', ''),
+            'timezone'  => env('POST_DB_TIMEZONE', '+08:00'),
+            'strict'    => env('POST_DB_STRICT_MODE', false),
+            'unix_socket' => env('DB_SOCKET', ''),
+        ],
 
     ],
 
